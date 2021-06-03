@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Dimensions, StatusBar } from 'react-native';
-// import SearchBar from './SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import { haze, rainy, snow, sunny } from '../../assets/backgroundImages/index';
 
-export default function Weather({ weatherData, fetchWeatherData }) {
+
+
+export default function Weather({ weatherData, getWeatherData }) {
 
     const [backgroundImage, setBackgroundImage] = useState(null);
 
     const { weather,
             name,
-            main: { temp, humidity },
-            wind: { speed }
+        main: { temp, humidity, pressure },
+        wind: { speed },
+        visibility
     } = weatherData;
     const [{ main }] = weather;
 
@@ -31,17 +34,18 @@ export default function Weather({ weatherData, fetchWeatherData }) {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='darkgray' />
+
             <ImageBackground 
                 source={backgroundImage}
                 style={styles.backgroundImg}
                 resizeMode='cover'
             >
-                <SearchBar fetchWeatherData={fetchWeatherData} />
+                <SearchBar getWeatherData={getWeatherData} />
 
                 <View style={{alignItems: 'center' }}>
                     <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold', fontSize: 46 }}>{name}</Text>
-                    <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold'}}>{main}</Text>
-                    <Text style={{ ...styles.headerText, color: textColor,}}>{temp} °C</Text>
+                    {/* <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold'}}>{main}</Text> */}
+                    <Text style={{ fontSize: 50, color: textColor, }}>{temp} °C</Text>
                 </View>
 
                 <View style={styles.extraInfo}>
@@ -57,7 +61,22 @@ export default function Weather({ weatherData, fetchWeatherData }) {
                     </View>
                 
                 </View>
-                
+
+                <View style={styles.extraInfo}>
+
+                    <View style={styles.info}>
+                        <Text style={{ fontSize: 22, color: 'white' }}>Pressure</Text>
+                        <Text style={{ fontSize: 22, color: 'white' }}>{pressure} hPa</Text>
+                    </View>
+
+                    <View style={styles.info}>
+                        <Text style={{ fontSize: 22, color: 'white' }}>Visibility</Text>
+                        <Text style={{ fontSize: 22, color: 'white' }}>{visibility} meter</Text>
+                    </View>
+
+                </View>
+
+
 
             </ImageBackground>
         </View>
