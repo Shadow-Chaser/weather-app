@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Ashab Is going to build a native app</Text>
+      <Text>Ashab</Text>
       <StatusBar style="auto" />
     </View>
   );
